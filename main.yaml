@@ -1,0 +1,13 @@
+---
+- name: Config and show router R1
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name : Read data from test.csv
+      read_csv:
+        path: test.csv
+        key: Hostnames
+      register: data
+    - include_tasks: task1.yaml
+    - include_tasks: task2.yaml
+

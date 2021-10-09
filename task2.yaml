@@ -1,0 +1,19 @@
+---
+    - name: Config interface on Router R2
+      cisco.ios.ios_config:
+        lines: 
+        - "ip add {{ item.ip }} {{ item.subnetmask }}"
+        - no shutdown
+        parents: "interface {{ item.Interfaces }}"
+      loop: "{{ data.list }}"
+      when: inventory_hostname in groups['R2']
+
+    - name: Run show interface on R2
+      cisco.ios.ios_command:
+        commands: show ip interface brief
+      register: output
+
+    - name: Show output
+      debug:
+        msg: "{{ output.stdout_lines }}"
+     

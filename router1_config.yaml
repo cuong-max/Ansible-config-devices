@@ -1,0 +1,19 @@
+---
+- name: RouterOS test with network_cli connection
+  hosts: R1
+  gather_facts: false
+  tasks:
+          
+  - name: Configure interface loopback on R1
+    cisco.ios.ios_config:
+      lines:
+      - description test interface
+      - ip address 1.1.1.1 255.255.255.255
+      parents: interface l0
+
+  - name: Enable routing OSPF
+    cisco.ios.ios_config:
+      lines:
+      - network 0.0.0.0 0.0.0.0 area 0
+      parents: router ospf 1
+

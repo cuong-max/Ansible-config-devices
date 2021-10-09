@@ -1,0 +1,23 @@
+---
+- name: RouterOS test with network_cli connection
+  hosts: R2
+  gather_facts: false
+  tasks:
+  - name: Run show ip interface on device R2
+    cisco.ios.ios_command:
+      commands: show ip interface brief
+    register: loopback
+  
+  - name: Print output
+    debug:
+      var: loopback.stdout_lines
+
+  - name: Run show ip ospf neighbor
+    cisco.ios.ios_command:
+      commands: show ip ospf neighbor 
+    register: output
+  
+  - name: Print output
+    debug:
+      var: output.stdout_lines
+

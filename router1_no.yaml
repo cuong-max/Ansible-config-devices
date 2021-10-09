@@ -1,0 +1,12 @@
+- name: RouterOS test with network_cli connection
+  hosts: R1
+  gather_facts: false
+  tasks:
+  - name: Delete interface l0 R1
+    cisco.ios.ios_config:
+      commands: no interface Loopback0
+  
+  - name: Stop OSPF on R1
+    cisco.ios.ios_config:
+      commands: no router ospf 1
+

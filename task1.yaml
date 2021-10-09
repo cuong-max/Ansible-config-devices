@@ -1,0 +1,28 @@
+---
+- name: Config and show router R1
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name : Read data from test.csv
+      read_csv:
+        path: test.csv
+      register: data
+
+    - name: Config interface on Router R1
+      cisco.ios.ios_config:
+        lines: "no ip add {{ item.ip }} {{ item.subnetmask }}"
+        parents: "interface {{ item.interfaces }}"
+      loop: "{{ data.list }}"
+      when: 
+      - inventory_hostname in groups['R1']
+      - {{ item.hostnames}} == Router1
+
+    - name: Run show interface on R1
+      cisco.ios.ios_command:
+        commands: show ip interface brief
+      register: output
+
+    - name: Show output
+      debug:
+        msg: "{{ output.stdout_lines }}"
+     

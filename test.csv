@@ -1,0 +1,3 @@
+hostnames,interfaces,ip,subnetmask
+Router1,Loopback0,1.1.1.1,255.255.255.255
+Router2,Loopback0,2.2.2.2,255.255.255.255
